@@ -26,34 +26,36 @@ import top.Settings
 // Out Of Order Load/Store Unit
 
 object LSUOpType { //TODO: refactor LSU fuop
-  def lb   = "b0000000".U
-  def lh   = "b0000001".U
-  def lw   = "b0000010".U
-  def ld   = "b0000011".U
-  def lbu  = "b0000100".U
-  def lhu  = "b0000101".U
-  def lwu  = "b0000110".U  
-  
-  def sb   = "b0001000".U
-  def sh   = "b0001001".U
-  def sw   = "b0001010".U
-  def sd   = "b0001011".U
-  def sdvec0 = "b0001101".U
-  def sdvec1 = "b0001101".U
-  def ldvec0 = "b0000111".U
-  def ldvec1 = "b0000111".U
-  
-  def lr      = "b0100000".U
-  def sc      = "b0100001".U
-  def amoswap = "b0100010".U
-  def amoadd  = "b1100011".U
-  def amoxor  = "b0100100".U
-  def amoand  = "b0100101".U
-  def amoor   = "b0100110".U
-  def amomin  = "b0110111".U
-  def amomax  = "b0110000".U
-  def amominu = "b0110001".U
-  def amomaxu = "b0110010".U
+  def lb   = "b0000_0000".U
+  def lh   = "b0000_0001".U
+  def lw   = "b0000_0010".U
+  def ld   = "b0000_0011".U
+  def lbu  = "b0000_0100".U
+  def lhu  = "b0000_0101".U
+  def lwu  = "b0000_0110".U  
+
+  def sb   = "b0000_1000".U
+  def sh   = "b0000_1001".U
+  def sw   = "b0000_1010".U
+  def sd   = "b0000_1011".U
+//add for FFT
+  def ldvec0 = "b1000_0011".U
+  def ldvec1 = "b1001_0011".U
+  def sdvec0 = "b1000_1011".U
+  def sdvec1 = "b1001_1011".U
+
+//Atom
+  def lr      = "b0010_0000".U
+  def sc      = "b0010_0001".U
+  def amoswap = "b0010_0010".U
+  def amoadd  = "b0110_0011".U
+  def amoxor  = "b0010_0100".U
+  def amoand  = "b0010_0101".U
+  def amoor   = "b0010_0110".U
+  def amomin  = "b0011_0111".U
+  def amomax  = "b0011_0000".U
+  def amominu = "b0011_0001".U
+  def amomaxu = "b0011_0010".U
   
   def isAdd(func: UInt) = func(6)
   def isAtom(func: UInt): Bool = func(5)

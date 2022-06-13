@@ -67,6 +67,8 @@ class EXU(implicit val p: NutCoreConfig) extends NutCoreModule {
   io.out.bits.isMMIO := lsu.io.isMMIO || (AddressSpace.isMMIO(io.in.bits.cf.pc) && io.out.valid)
   io.dmem <> lsu.io.dmem
   lsu.io.out.ready := true.B
+  
+
 
   val mdu = Module(new MDU)
   val mduOut = mdu.access(valid = fuValids(FuType.mdu), src1 = src1, src2 = src2, func = fuOpType)
@@ -115,24 +117,31 @@ class EXU(implicit val p: NutCoreConfig) extends NutCoreModule {
     FuType.mdu -> mdu.io.out.valid,
     FuType.fftu -> fftu.io.out.valid
   ))
+  
+  val isvecL = fuType===FuType.lsu && (fuOpType === LSUOpType.ldvec0 )
+  val isvecH = fuType===FuType.lsu && (fuOpType === LSUOpType.ldvec1 )
+  val lsuOut1 = Mux(isvecH, Cat(lsuOut,Fill(64,0.U)), Cat(Fill(64,0.U),lsuOut) )
+  val lsuMask = Mux(isvecH, Cat(Fill(64,1.U),Fill(64,0.U)), Cat(Fill(64,0.U),Fill(64,1.U)) )
+
 
   io.out.bits.commits(FuType.alu) := aluOut
-  io.out.bits.commits(FuType.lsu) := lsuOut
+  io.out.bits.commits(FuType.lsu) := lsuOut1
   io.out.bits.commits(FuType.csr) := csrOut
   io.out.bits.commits(FuType.mdu) := mduOut
   io.out.bits.commits(FuType.mou) := 0.U
   io.out.bits.commits(FuType.fftu) := fftuOut
-  io.out.bits.mask := Mux((io.in.bits.ctrl.fuType === "b101".U),fftu.io.mask,0.U )
+  //默认mask是0 原因是reg写入数据不需要mask，只有rvec需要
+  io.out.bits.mask := Mux((io.in.bits.ctrl.fuType === FuType.fftu),fftu.io.mask,Mux((isvecL || isvecH),lsuMask,0.U))
 
   io.in.ready := !io.in.valid || io.out.fire()
 //增加在执行级写回的逻辑
   io.forward.valid := io.in.valid
   io.forward.wb.rfWen := io.in.bits.ctrl.rfWen
   io.forward.wb.rfDest := io.in.bits.ctrl.rfDest
-  io.forward.wb.rfData := Mux((io.in.bits.ctrl.rfType===1.U),fftuOut,Mux(alu.io.out.fire(), aluOut, lsuOut))
   io.forward.wb.rfType := io.in.bits.ctrl.rfType
   io.forward.fuType := io.in.bits.ctrl.fuType
-  io.forward.wb.mask := Mux((io.in.bits.ctrl.rfType ===1.U),fftu.io.mask,"b1111".U)
+  io.forward.wb.rfData := Mux((io.in.bits.ctrl.fuType === FuType.fftu),fftuOut,Mux(alu.io.out.fire(), aluOut, lsuOut1))
+  io.forward.wb.mask := Mux((io.in.bits.ctrl.fuType === FuType.fftu),fftu.io.mask,Mux(((isvecL || isvecH)),lsuMask,0.U))
 
   val isBru = ALUOpType.isBru(fuOpType)
   BoringUtils.addSource(alu.io.out.fire() && !isBru, "perfCntCondMaluInstr")

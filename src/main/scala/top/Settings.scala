@@ -26,7 +26,7 @@ object DefaultSettings {
     "NrExtIntr" -> 1,
 
     "HasL2cache" -> true,
-    "HasPrefetch" -> true,
+    "HasPrefetch" -> false,
     "EnableMultiIssue" -> false,
     "EnableOutOfOrderExec" -> false,
     "HasDTLB" -> false,

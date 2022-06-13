@@ -332,7 +332,7 @@ class LSExecUnit extends NutCoreModule {
   val dmem = io.dmem
   val addrLatch = RegNext(addr)
   val isStore = valid && LSUOpType.isStore(func)
-  val partialLoad = !isStore && (func =/= LSUOpType.ld)
+  val partialLoad = !isStore && func =/= LSUOpType.ld && func =/= LSUOpType.ldvec0 && func =/= LSUOpType.ldvec1
 
   val s_idle :: s_wait_tlb :: s_wait_resp :: s_partialLoad :: Nil = Enum(4)
   val state = RegInit(s_idle)

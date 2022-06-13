@@ -39,7 +39,7 @@ class Decoder(implicit val p: NutCoreConfig) extends NutCoreModule with HasInstr
   
   val isRVC = if (HasCExtension) instr(1,0) =/= "b11".U else false.B
   // 当是访存指令需要写回RVEC时
-  val isFFTlsu = (io.fuType === lsu && (io.fuOpType === ldvec0 || io.fuOpType === ldvec1 || io.fuOpType === sdvec0 || io.fuOpType === sdvec1))
+  val isFFTlsu = (fuType === FuType.lsu && (fuOpType === LSUOpType.ldvec0 || fuOpType === LSUOpType.ldvec1 || fuOpType === LSUOpType.sdvec0 || fuOpType === LSUOpType.sdvec1))
   val isVec = Mux((instrType === InstrFFT || isFFTlsu), 1.U, 0.U)
   val rvcImmType :: rvcSrc1Type :: rvcSrc2Type :: rvcDestType :: Nil =
     ListLookup(instr, CInstructions.DecodeDefault, CInstructions.CExtraDecodeTable) 
@@ -105,6 +105,8 @@ class Decoder(implicit val p: NutCoreConfig) extends NutCoreModule with HasInstr
   //向下一级传递写寄存器的类型
   io.out.bits.ctrl.rfType := rfType
   
+  //val isLSU4vec = (fuType === FuType.fftu && (fuOpType===FFTUOpType.ldvec0 || fuOpType===FFTUOpType.ldvec1 || fuOpType===FFTUOpType.sdvec0 || fuOpType===FFTUOpType.sdvec1)) 
+
   io.out.bits.data := DontCare
   val imm = LookupTree(instrType, List(
     InstrI  -> SignExt(instr(31, 20), VLEN),

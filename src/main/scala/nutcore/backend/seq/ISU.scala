@@ -65,26 +65,33 @@ class ISU(implicit val p: NutCoreConfig) extends NutCoreModule with HasRegFilePa
 //(data & mask) | (rvec(addr) & ~mask)
   val forwardEX_rvData = (io.forward.wb.rfData & io.forward.wb.mask) | (rvec.read(io.forward.wb.rfDest) & ~io.forward.wb.mask)
   val forwardWB_rvData = (io.wb.rfData & io.wb.mask) | (rvec.read(io.wb.rfDest) & ~io.wb.mask)
+  
 
-  val forwardEXData = Mux((io.in(0).bits.ctrl.rfType===0.U),io.forward.wb.rfData,forwardEX_rvData)
-  val forwardWBData = Mux((io.in(0).bits.ctrl.rfType===0.U),io.wb.rfData,forwardWB_rvData)
-
-
+  val isSDVEC0 = (io.in(0).bits.ctrl.fuType===FuType.lsu  && io.in(0).bits.ctrl.fuOpType === LSUOpType.sdvec0)
+  val isSDVEC1 = (io.in(0).bits.ctrl.fuType===FuType.lsu  && io.in(0).bits.ctrl.fuOpType === LSUOpType.sdvec1)
+  val forwardEX_SDrvData = Mux(isSDVEC0,Cat(Fill(64,0.U),forwardEX_rvData(63,0)),Mux(isSDVEC1,Cat(Fill(64,0.U),forwardEX_rvData(127,64)),forwardEX_rvData))
+  val forwardWB_SDrvData = Mux(isSDVEC0,Cat(Fill(64,0.U),forwardWB_rvData(63,0)),Mux(isSDVEC1,Cat(Fill(64,0.U),forwardWB_rvData(127,64)),forwardWB_rvData))
+  val forwardEXData = Mux((io.in(0).bits.ctrl.rfType===0.U),io.forward.wb.rfData,forwardEX_SDrvData)
+  val forwardWBData = Mux((io.in(0).bits.ctrl.rfType===0.U),io.wb.rfData,forwardWB_SDrvData) 
   // out1
   io.out.bits.data.src1 := MuxCase(1.U,Array(        
     //在这里使得操作数从rvec中得到，同时考虑数据前推的问题 
     (io.in(0).bits.ctrl.src1Type === SrcType.pc) -> SignExt(io.in(0).bits.cf.pc, AddrBits),
     src1ForwardNextCycle -> forwardEXData, //io.forward.wb.rfData,
     (src1Forward && !src1ForwardNextCycle) -> forwardWBData, //io.wb.rfData,
-    ((io.in(0).bits.ctrl.src1Type === SrcType.reg) && !src1ForwardNextCycle && !src1Forward &&(io.in(0).bits.ctrl.rfType===0.U)) -> rf.read(rfSrc1),
-    (io.in(0).bits.ctrl.src1Type === SrcType.rvec) -> rvec.read(rfSrc1)
+    ((io.in(0).bits.ctrl.src1Type === SrcType.reg && rfType_r === 0.U) && !src1ForwardNextCycle && !src1Forward &&(io.in(0).bits.ctrl.rfType===0.U)) -> rf.read(rfSrc1),
+    (io.in(0).bits.ctrl.src1Type === SrcType.rvec || rfType_r === 1.U ) -> rvec.read(rfSrc1)
   ))
   io.out.bits.data.src2 :=  MuxCase(1.U,Array(
-    (io.in(0).bits.ctrl.src2Type === SrcType.rvec) -> rvec.read(rfSrc2),
-    (io.in(0).bits.ctrl.src2Type =/= SrcType.reg) -> io.in(0).bits.data.imm,
-    src2ForwardNextCycle -> io.forward.wb.rfData, //io.forward.wb.rfData,
-    (src2Forward && !src2ForwardNextCycle) -> io.wb.rfData, //io.wb.rfData,
-    ((io.in(0).bits.ctrl.src2Type === SrcType.reg) && !src2ForwardNextCycle && !src2Forward) -> rf.read(rfSrc2)
+   
+    (io.in(0).bits.ctrl.src2Type === SrcType.imm) -> io.in(0).bits.data.imm,
+    src2ForwardNextCycle -> forwardEXData, //io.forward.wb.rfData,
+    (src2Forward && !src2ForwardNextCycle) -> forwardWBData, //io.wb.rfData,
+     (io.in(0).bits.ctrl.src2Type === SrcType.rvec) -> rvec.read(rfSrc2),
+     //还没考虑数据前推的问题
+     isSDVEC0 -> Cat(Fill(64,0.U),rvec.read(rfSrc2)(63,0)),
+     isSDVEC1 -> Cat(Fill(64,0.U),rvec.read(rfSrc2)(127,64)),
+     ((io.in(0).bits.ctrl.src2Type === SrcType.reg) && !src2ForwardNextCycle && !src2Forward) -> rf.read(rfSrc2)
     
   ))
 

@@ -79,7 +79,7 @@ object FuType extends HasNutCoreConst {
 }
 
 object FuOpType {
-  def apply() = UInt(7.W)
+  def apply() = UInt(8.W)
 }
 
 object Instructions extends HasInstrType with HasNutCoreParameter {
