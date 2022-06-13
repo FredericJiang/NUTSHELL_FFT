@@ -120,7 +120,7 @@ class EXU(implicit val p: NutCoreConfig) extends NutCoreModule {
   
   val isvecL = fuType===FuType.lsu && (fuOpType === LSUOpType.ldvec0 )
   val isvecH = fuType===FuType.lsu && (fuOpType === LSUOpType.ldvec1 )
-  val lsuOut1 = Mux(isvecH, Cat(lsuOut,Fill(64,0.U)), Cat(Fill(64,0.U),lsuOut) )
+  val lsuOut1 = Mux(isvecH, Cat(lsuOut(63,0),Fill(64,0.U)), lsuOut)
   val lsuMask = Mux(isvecH, Cat(Fill(64,1.U),Fill(64,0.U)), Cat(Fill(64,0.U),Fill(64,1.U)) )
 
 
