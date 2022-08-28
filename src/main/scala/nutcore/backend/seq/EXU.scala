@@ -32,7 +32,8 @@ class EXU(implicit val p: NutCoreConfig) extends NutCoreModule {
     val forward = new ForwardIO
     val memMMU = Flipped(new MemMMUIO)
   })
-
+  val pc_reg = RegInit(0.U)
+  pc_reg := io.in.bits.cf.pc
   val src1  = io.in.bits.data.src1(XLEN-1,0)
   val src2  = io.in.bits.data.src2(XLEN-1,0)
   val vsrc1 = io.in.bits.data.src1(VLEN-1,0)
@@ -95,13 +96,23 @@ class EXU(implicit val p: NutCoreConfig) extends NutCoreModule {
   mou.io.cfIn := io.in.bits.cf
   mou.io.out.ready := true.B
   
+
+  val isFFTreg2vec = io.in.bits.ctrl.fuType===FuType.fftu && io.in.bits.ctrl.fuOpType === FFTUOpType.reg2vec && (pc_reg =/= io.in.bits.cf.pc)
+
   io.out.bits.decode := DontCare
-  (io.out.bits.decode.ctrl, io.in.bits.ctrl) match { case (o, i) =>
-    o.rfWen := i.rfWen && (!lsuTlbPF && !lsu.io.loadAddrMisaligned && !lsu.io.storeAddrMisaligned || !fuValids(FuType.lsu)) && !(csr.io.wenFix && fuValids(FuType.csr))
-    o.rfDest := i.rfDest
-    o.fuType := i.fuType
-    o.rfType := i.rfType
-  }
+  // (io.out.bits.decode.ctrl, io.in.bits.ctrl) match { case (o, i) =>
+  //   o.rfWen := i.rfWen && (!lsuTlbPF && !lsu.io.loadAddrMisaligned && !lsu.io.storeAddrMisaligned || !fuValids(FuType.lsu)) && !(csr.io.wenFix && fuValids(FuType.csr))
+  //   o.rfDest := Mux(isFFTreg2vec ,fftu.io.counter_dest ,i.rfDest)
+  //   o.rfDest := i.rfDest
+  //   o.fuType := i.fuType
+  //   o.DestType := i.DestType
+  // }
+
+  io.out.bits.decode.ctrl.rfWen := io.in.bits.ctrl.rfWen && (!lsuTlbPF && !lsu.io.loadAddrMisaligned && !lsu.io.storeAddrMisaligned || !fuValids(FuType.lsu)) && !(csr.io.wenFix && fuValids(FuType.csr))
+  io.out.bits.decode.ctrl.rfDest := Mux(isFFTreg2vec ,fftu.io.counter_dest ,io.in.bits.ctrl.rfDest)
+  io.out.bits.decode.ctrl.fuType := io.in.bits.ctrl.fuType
+  io.out.bits.decode.ctrl.DestType := io.in.bits.ctrl.DestType
+
   io.out.bits.decode.cf.pc := io.in.bits.cf.pc
   io.out.bits.decode.cf.instr := io.in.bits.cf.instr
   io.out.bits.decode.cf.redirect <>
@@ -137,8 +148,8 @@ class EXU(implicit val p: NutCoreConfig) extends NutCoreModule {
 //增加在执行级写回的逻辑
   io.forward.valid := io.in.valid
   io.forward.wb.rfWen := io.in.bits.ctrl.rfWen
-  io.forward.wb.rfDest := io.in.bits.ctrl.rfDest
-  io.forward.wb.rfType := io.in.bits.ctrl.rfType
+  io.forward.wb.rfDest := Mux(isFFTreg2vec ,fftu.io.counter_dest ,io.in.bits.ctrl.rfDest)
+  io.forward.wb.DestType := io.in.bits.ctrl.DestType
   io.forward.fuType := io.in.bits.ctrl.fuType
   io.forward.wb.rfData := Mux((io.in.bits.ctrl.fuType === FuType.fftu),fftuOut,Mux(alu.io.out.fire(), aluOut, lsuOut1))
   io.forward.wb.mask := Mux((io.in.bits.ctrl.fuType === FuType.fftu),fftu.io.mask,Mux(((isvecL || isvecH)),lsuMask,0.U))

@@ -32,6 +32,7 @@ class SimMMIO extends Module {
   })
 
   val devAddrSpace = List(
+    //(0xe0000000L, 0x10L), // uart
     (0x40600000L, 0x10L), // uart
     (0x50000000L, 0x400000L), // vmem
     (0x40001000L, 0x8L),  // vga ctrl

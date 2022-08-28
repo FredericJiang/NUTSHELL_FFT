@@ -40,7 +40,16 @@ class Decoder(implicit val p: NutCoreConfig) extends NutCoreModule with HasInstr
   val isRVC = if (HasCExtension) instr(1,0) =/= "b11".U else false.B
   // 当是访存指令需要写回RVEC时
   val isFFTlsu = (fuType === FuType.lsu && (fuOpType === LSUOpType.ldvec0 || fuOpType === LSUOpType.ldvec1 || fuOpType === LSUOpType.sdvec0 || fuOpType === LSUOpType.sdvec1))
-  val isVec = Mux((instrType === InstrFFT || isFFTlsu), 1.U, 0.U)
+  
+
+  
+  val isfftu_WBreg = instrType === InstrFFT && fuType === FuType.fftu && (fuOpType === FFTUOpType.vech2reg || fuOpType === FFTUOpType.vecl2reg)
+  val isfftu_RDreg = instrType === InstrFFT && fuType === FuType.fftu &&  fuOpType === FFTUOpType.reg2vec
+  //val isWBVec = Mux(((instrType === InstrFFT && !isfftu_WBreg ) || isFFTlsu), 1.U, 0.U)
+  //val isRDVec = Mux(((instrType === InstrFFT && !isfftu_RDreg )            ), 1.U, 0.U)
+    val isRvec = (instrType === InstrFFT || isFFTlsu) && !isfftu_WBreg
+  
+  //压缩指令
   val rvcImmType :: rvcSrc1Type :: rvcSrc2Type :: rvcDestType :: Nil =
     ListLookup(instr, CInstructions.DecodeDefault, CInstructions.CExtraDecodeTable) 
   
@@ -61,8 +70,9 @@ class Decoder(implicit val p: NutCoreConfig) extends NutCoreModule with HasInstr
     InstrN -> (SrcType.pc , SrcType.imm),
     InstrFFT -> (SrcType.rvec,SrcType.rvec)
   )
-  val src1Type = LookupTree(instrType, SrcTypeTable.map(p => (p._1, p._2._1)))
-  val src2Type = LookupTree(instrType, SrcTypeTable.map(p => (p._1, p._2._2)))
+  //reg2vec-fix:
+  val src1Type = Mux(isfftu_RDreg, SrcType.reg, LookupTree(instrType, SrcTypeTable.map(p => (p._1, p._2._1))))
+  val src2Type = Mux(isfftu_RDreg, SrcType.reg, LookupTree(instrType, SrcTypeTable.map(p => (p._1, p._2._2))))
 
   val (rs, rt, rd) = (instr(19, 15), instr(24, 20), instr(11, 7))
 
@@ -95,15 +105,18 @@ class Decoder(implicit val p: NutCoreConfig) extends NutCoreModule with HasInstr
   val rfSrc1 = Mux(isRVC, rvc_src1, rs)
   val rfSrc2 = Mux(isRVC, rvc_src2, rt)
   val rfDest = Mux(isRVC, rvc_dest, rd)
-  val rfType = isVec
+  val DestType = Mux(isRvec ,1.U, 0.U)
+
+  val isclear = fuType === FuType.fftu && (fuOpType===FFTUOpType.clear_counter || fuOpType===FFTUOpType.clear_src1)
+
   // TODO: refactor decode logic
   // make non-register addressing to zero, since isu.sb.isBusy(0) === false.B
   io.out.bits.ctrl.rfSrc1 := Mux(src1Type === SrcType.pc, 0.U, rfSrc1)
   io.out.bits.ctrl.rfSrc2 := Mux((src2Type === SrcType.rvec||src2Type === SrcType.reg), rfSrc2, 0.U)
-  io.out.bits.ctrl.rfWen  := isrfWen(instrType)
+  io.out.bits.ctrl.rfWen  := Mux(isclear, 0.U,isrfWen(instrType))
   io.out.bits.ctrl.rfDest := Mux(isrfWen(instrType), rfDest, 0.U)
   //向下一级传递写寄存器的类型
-  io.out.bits.ctrl.rfType := rfType
+  io.out.bits.ctrl.DestType := DestType
   
   //val isLSU4vec = (fuType === FuType.fftu && (fuOpType===FFTUOpType.ldvec0 || fuOpType===FFTUOpType.ldvec1 || fuOpType===FFTUOpType.sdvec0 || fuOpType===FFTUOpType.sdvec1)) 
 

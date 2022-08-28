@@ -1,0 +1,367 @@
+/*
+
+Xilinx Vivado v2019.1 (64-bit) [Major: 2019, Minor: 1]
+SW Build: 2552052 on Fri May 24 14:47:09 MDT 2019
+IP Build: 2548770 on Fri May 24 18:01:18 MDT 2019
+
+Process ID (PID): 1378240
+License: Customer
+
+Current time: 	Wed Jul 20 15:03:27 CST 2022
+Time zone: 	China Standard Time (Asia/Shanghai)
+
+OS: Ubuntu
+OS Version: 5.13.0-41-generic
+OS Architecture: amd64
+Available processors (cores): 32
+
+Display: localhost:10.0
+Screen size: 1280x720
+Screen resolution (DPI): 100
+Available screens: 2
+Available disk space: 800 GB
+Default font: family=Dialog,name=Dialog,style=plain,size=12
+
+Java version: 	9.0.4 64-bit
+Java home: 	/data/jsj/tools/Xilinx/Vivado/2019.1/tps/lnx64/jre9.0.4
+Java executable location: 	/data/jsj/tools/Xilinx/Vivado/2019.1/tps/lnx64/jre9.0.4/bin/java
+Java initial memory (-Xms): 	128 MB
+Java maximum memory (-Xmx):	 3 GB
+
+
+User name: 	jsj
+User home directory: /home/jsj
+User working directory: /data/jsj/proj/FFT_fpga/NUTSHELL_FFT
+User country: 	US
+User language: 	en
+User locale: 	en_US
+
+RDI_BASEROOT: /data/jsj/tools/Xilinx/Vivado
+HDI_APPROOT: /data/jsj/tools/Xilinx/Vivado/2019.1
+RDI_DATADIR: /data/jsj/tools/Xilinx/Vivado/2019.1/data
+RDI_BINDIR: /data/jsj/tools/Xilinx/Vivado/2019.1/bin
+
+Vivado preferences file location: /home/jsj/.Xilinx/Vivado/2019.1/vivado.xml
+Vivado preferences directory: /home/jsj/.Xilinx/Vivado/2019.1/
+Vivado layouts directory: /home/jsj/.Xilinx/Vivado/2019.1/layouts
+PlanAhead jar file location: 	/data/jsj/tools/Xilinx/Vivado/2019.1/lib/classes/planAhead.jar
+Vivado log file location: 	/data/jsj/proj/FFT_fpga/NUTSHELL_FFT/vivado.log
+Vivado journal file location: 	/data/jsj/proj/FFT_fpga/NUTSHELL_FFT/vivado.jou
+Engine tmp dir: 	./.Xil/Vivado-1378240-pizzahut.shic.lan
+
+Xilinx Environment Variables
+----------------------------
+XILINX: /data/jsj/tools/Xilinx/Vivado/2019.1/ids_lite/ISE
+XILINX_DSP: /data/jsj/tools/Xilinx/Vivado/2019.1/ids_lite/ISE
+XILINX_PLANAHEAD: /data/jsj/tools/Xilinx/Vivado/2019.1
+XILINX_SDK: /data/jsj/tools/Xilinx/SDK/2019.1
+XILINX_VIVADO: /data/jsj/tools/Xilinx/Vivado/2019.1
+XILINX_VIVADO_HLS: /data/jsj/tools/Xilinx/Vivado/2019.1
+
+
+GUI allocated memory:	154 MB
+GUI max memory:		3,072 MB
+Engine allocated memory: 962 MB
+
+Copyright 1986-2019 Xilinx, Inc. All Rights Reserved.
+
+*/
+
+// TclEventType: START_GUI
+// Tcl Message: start_gui 
+// HMemoryUtils.trashcanNow. Engine heap size: 962 MB. GUI used memory: 50 MB. Current time: 7/20/22, 3:03:29 PM CST
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1004 ms.
+// WARNING: HEventQueue.dispatchEvent() is taking  1001 ms.
+selectList(PAResourceQtoS.SyntheticaGettingStartedView_RECENT_PROJECTS, "/data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.xpr", 0); // q (O, cl)
+// [GUI Memory]: 92 MB (+93857kb) [00:05:06]
+// [Engine Memory]: 970 MB (+865757kb) [00:05:06]
+// Opening Vivado Project: /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.xpr. Version: Vivado v2019.1 
+// by (cl):  Open Project : addNotify
+// TclEventType: DEBUG_PROBE_SET_CHANGE
+// Tcl Message: open_project /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.xpr 
+// TclEventType: MSGMGR_MOVEMSG
+// TclEventType: FILE_SET_NEW
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_COMPLETED
+// TclEventType: RUN_STATUS_CHANGE
+// TclEventType: RUN_CURRENT
+// TclEventType: PROJECT_DASHBOARD_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: PROJECT_DASHBOARD_GADGET_NEW
+// TclEventType: PROJECT_DASHBOARD_GADGET_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: IP_LOCK_CHANGE
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: PROJECT_NEW
+// [GUI Memory]: 130 MB (+34659kb) [00:05:13]
+// [Engine Memory]: 1,128 MB (+114570kb) [00:05:13]
+// [Engine Memory]: 1,193 MB (+8668kb) [00:05:15]
+// [GUI Memory]: 137 MB (+1445kb) [00:05:15]
+// [GUI Memory]: 145 MB (+635kb) [00:05:15]
+// WARNING: HEventQueue.dispatchEvent() is taking  3379 ms.
+// Tcl Message: open_project /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.xpr 
+// HMemoryUtils.trashcanNow. Engine heap size: 1,267 MB. GUI used memory: 94 MB. Current time: 7/20/22, 3:08:33 PM CST
+// Tcl Message: Scanning sources... Finished scanning sources 
+// Tcl Message: INFO: [IP_Flow 19-234] Refreshing IP repositories INFO: [IP_Flow 19-1704] No user IP repositories specified INFO: [IP_Flow 19-2313] Loaded Vivado IP repository '/data/jsj/tools/Xilinx/Vivado/2019.1/data/ip'. 
+// [Engine Memory]: 1,269 MB (+17557kb) [00:05:17]
+// WARNING: HEventQueue.dispatchEvent() is taking  1815 ms.
+// Tcl Message: open_project: Time (s): cpu = 00:00:31 ; elapsed = 00:00:08 . Memory (MB): peak = 6716.387 ; gain = 250.008 ; free physical = 79263 ; free virtual = 123916 
+// [Engine Memory]: 1,926 MB (+622512kb) [00:05:18]
+// Project name: myproject-pynq; location: /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq; part: xc7z020clg400-1
+// [Engine Memory]: 2,155 MB (+139382kb) [00:05:19]
+// Elapsed time: 12 seconds
+dismissDialog("Open Project"); // by (cl)
+// a (cl): Critical Messages: addNotify
+// [Engine Memory]: 2,544 MB (+294504kb) [00:05:21]
+// TclEventType: DG_GRAPH_STALE
+// TclEventType: FILE_SET_CHANGE
+// Tcl Message: update_compile_order -fileset sources_1 
+// [GUI Memory]: 161 MB (+9417kb) [00:05:25]
+// TclEventType: FILE_SET_CHANGE
+// TclEventType: DG_GRAPH_STALE
+// Elapsed time: 45 seconds
+selectList(PAResourceAtoD.CmdMsgDialog_MESSAGES, "[Project 1-19] Could not find the file '/data/jsj/proj/FFT_fpga/NUTSHELL_FFT/build/TopMain.v'.", 0); // b (F, a)
+selectList(PAResourceAtoD.CmdMsgDialog_MESSAGES, "[Project 1-19] Could not find the file '/data/jsj/proj/FFT_fpga/NUTSHELL_FFT/build/DifftestRunaheadEvent.v'.", 1); // b (F, a)
+selectList(PAResourceAtoD.CmdMsgDialog_MESSAGES, "[Project 1-19] Could not find the file '/data/jsj/proj/FFT_fpga/NUTSHELL_FFT/build/DifftestRunaheadRedirectEvent.v'.", 2); // b (F, a)
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (a)
+dismissDialog("Critical Messages"); // a (cl)
+selectTree(PAResourceEtoH.FlowNavigatorTreePanel_FLOW_NAVIGATOR_TREE, "[, IP Integrator, Open Block Design]", 7, false); // u (O, cl)
+// Run Command: PAResourceCommand.PACommandNames_OPEN_BLOCK_DESIGN
+// by (cl):  Open Block Design : addNotify
+// TclEventType: LOAD_FEATURE
+// TclEventType: RSB_CHANGE_CURRENT_DIAGRAM
+// Tcl Message: open_bd_design {/data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.srcs/sources_1/bd/system_top/system_top.bd} 
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: LOAD_FEATURE
+// TclEventType: RSB_PROPERTY_CHANGE
+// TclEventType: RSB_OPEN_DIAGRAM
+// Tcl Message: Adding component instance block -- xilinx.com:ip:axi_protocol_converter:2.1 - axi_protocol_convert_0 Adding component instance block -- xilinx.com:ip:axi_protocol_converter:2.1 - axi_protocol_convert_1 Adding component instance block -- xilinx.com:ip:c_shift_ram:12.0 - c_shift_ram_0 Adding component instance block -- xilinx.com:ip:c_shift_ram:12.0 - c_shift_ram_1 Adding component instance block -- xilinx.com:ip:system_ila:1.1 - system_ila_0 Adding component instance block -- xilinx.com:ip:util_vector_logic:2.0 - util_vector_logic_0 
+// Tcl Message: Adding component instance block -- xilinx.com:ip:xlconcat:2.1 - xlconcat_0 Successfully read diagram <system_top> from BD file </data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.srcs/sources_1/bd/system_top/system_top.bd> 
+// TclEventType: RSB_OPEN_DIAGRAM
+// TclEventType: RSB_CONNECTION_CHANGE
+closeView(PAResourceOtoP.PAViews_PROJECT_SUMMARY, "Project Summary"); // v
+// TclEventType: RSB_LOCK_CHANGE
+// TclEventType: RSB_CHANGE_CURRENT_DIAGRAM
+// TclEventType: RSB_LOCK_CHANGE
+// TclEventType: RSB_CHANGE_CURRENT_DIAGRAM
+// 'bB' command handler elapsed time: 4 seconds
+// a (cl): Critical Messages: addNotify
+dismissDialog("Open Block Design"); // by (cl)
+// Elapsed time: 13 seconds
+selectButton(PAResourceAtoD.CmdMsgDialog_OK, "OK"); // f (a)
+dismissDialog("Critical Messages"); // a (cl)
+// Elapsed time: 23 seconds
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, External Interfaces, io_mmio]", 13, false); // i (O, cl)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, External Interfaces, io_mmio]", 13, false, false, false, false, false, true); // i (O, cl) - Double Click
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, External Interfaces, io_mmio]", 13, false); // i (O, cl)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, External Interfaces, io_mmio]", 13, false, false, false, false, false, true); // i (O, cl) - Double Click
+// [GUI Memory]: 170 MB (+703kb) [00:13:18]
+// Elapsed time: 789 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "Address Editor", 1); // k (j, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "io_frontend", 1, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "io_frontend", 1, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "hier_clkrst/axi_gpio_0 ; S_AXI ; Reg ; 0x4000_0000 ; 4K ; 0x4000_0FFF", 3, "S_AXI", 1, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "io_frontend", 1, false); // g (O, cl)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, NutShell_0, io_mmio]", 36, false); // i (O, cl)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, NutShell_0, io_mmio]", 36, false); // i (O, cl)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, NutShell_0, io_mmio]", 36, false, false, false, false, false, true); // i (O, cl) - Double Click
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, NutShell_0, io_frontend]", 34, false); // i (O, cl)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, NutShell_0, io_frontend]", 34, false); // i (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "rv_system/NutShell_0", 0, false); // g (O, cl)
+expandTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "rv_system/NutShell_0", 0, false, false, false, false, false, true); // g (O, cl) - Double Click
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "io_frontend", 1, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "io_frontend", 1, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "io_frontend", 1, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "io_frontend", 1, false, false, false, false, true, false); // g (O, cl) - Popup Trigger
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "reg0", 2, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "0x6000_0000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "reg0", 2, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "io_mmio (32 address bits : 4G) ;  ;  ;  ;  ; ", 7, "io_mmio (32 address bits : 4G)", 0, true); // g (O, cl) - Node
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_ENET0 ; 0xE000_B000 ; 4K ; 0xE000_BFFF", 8, "GP0_ENET0", 2, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "GP0_UART0", 2, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "0xE000_0000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "GP0_UART0", 2, false); // g (O, cl)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,576 MB. GUI used memory: 109 MB. Current time: 7/20/22, 3:38:35 PM CST
+// Elapsed time: 1172 seconds
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "rv_system/NutShell_0", 0, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "rv_system/NutShell_0", 0, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "rv_system/NutShell_0", 0, false, false, false, false, false, true); // g (O, cl) - Double Click
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "io_frontend", 1, false); // g (O, cl)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, NutShell_0, io_mmio]", 36, false); // i (O, cl)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, NutShell_0, io_mmio]", 36, false); // i (O, cl)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, NutShell_0, io_mmio]", 36, false, false, false, false, false, true); // i (O, cl) - Double Click
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, NutShell_0, io_mmio]", 36, false); // i (O, cl)
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, NutShell_0, io_mmio]", 36, false, false, false, false, false, true); // i (O, cl) - Double Click
+selectTree(PAResourceQtoS.SystemTreeView_SYSTEM_TREE, "[system_top, rv_system, NutShell_0, io_mmio]", 36, false, false, false, false, true, false); // i (O, cl) - Popup Trigger
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "rv_system/NutShell_0", 0, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "io_mmio (32 address bits : 4G) ;  ;  ;  ;  ; ", 7, "io_mmio (32 address bits : 4G)", 0, true); // g (O, cl) - Node
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "io_mmio (32 address bits : 4G) ;  ;  ;  ;  ; ", 7, "io_mmio (32 address bits : 4G)", 0, true, false, false, false, false, true); // g (O, cl) - Double Click - Node
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "io_mmio (32 address bits : 4G) ;  ;  ;  ;  ; ", 7, "io_mmio (32 address bits : 4G)", 0, true); // g (O, cl) - Node
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "io_mmio (32 address bits : 4G) ;  ;  ;  ;  ; ", 7, "io_mmio (32 address bits : 4G)", 0, true); // g (O, cl) - Node
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "io_mmio (32 address bits : 4G) ;  ;  ;  ;  ; ", 7, "io_mmio (32 address bits : 4G)", 0, true); // g (O, cl) - Node
+expandTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "io_mmio (32 address bits : 4G) ;  ;  ;  ;  ; ", 7); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_ENET0 ; 0xE000_B000 ; 4K ; 0xE000_BFFF", 8, "processing_system7_0", 0, false); // g (O, cl)
+// Elapsed time: 14 seconds
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "GP0_UART0", 2, false); // g (O, cl)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,484 MB. GUI used memory: 82 MB. Current time: 7/20/22, 4:08:35 PM CST
+// Elapsed time: 3227 seconds
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "0xE000_0000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "Unmapped Slaves (5) ;  ;  ;  ;  ; ", 12, "Unmapped Slaves (5)", 0, true); // g (O, cl) - Node
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "0xE000_0000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "4K", 4, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "GP0_UART0", 2, false); // g (O, cl)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,477 MB. GUI used memory: 80 MB. Current time: 7/20/22, 4:38:35 PM CST
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "0xE000_0000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "Unmapped Slaves (5) ;  ;  ;  ;  ; ", 12, "Unmapped Slaves (5)", 0, true); // g (O, cl) - Node
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "0xE000_0FFF", 5, false); // g (O, cl)
+// WARNING: HEventQueue.dispatchEvent() is taking  2213 ms.
+// Elapsed time: 447 seconds
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "Unmapped Slaves (5) ;  ;  ;  ;  ; ", 12, "Unmapped Slaves (5)", 0, true); // g (O, cl) - Node
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "processing_system7_0", 0, false); // g (O, cl)
+// Elapsed time: 43 seconds
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "0x6000_0000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "hier_clkrst/axi_gpio_0 ; S_AXI ; Reg ; 0x4000_0000 ; 4K ; 0x4000_0FFF", 3, "0x4000_0000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "rv_system/NutShell_0 ; io_frontend ; reg0 ; 0x6000_0000 ; 512M ; 0x7FFF_FFFF", 2, "0x6000_0000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "hier_clkrst/axi_gpio_0 ; S_AXI ; Reg ; 0x4000_0000 ; 4K ; 0x4000_0FFF", 3, "0x4000_0000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_HP0 ; HP0_DDR_LOWOCM ; 0x1000_0000 ; 256M ; 0x1FFF_FFFF", 6, "0x1000_0000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_ENET0 ; 0xE000_B000 ; 4K ; 0xE000_BFFF", 8, "0xE000_B000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_SDIO0 ; 0xE010_0000 ; 4K ; 0xE010_0FFF", 10, "0xE010_0000", 3, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "0xE000_0000", 3, false); // g (O, cl)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,477 MB. GUI used memory: 79 MB. Current time: 7/20/22, 5:08:35 PM CST
+// Elapsed time: 2292 seconds
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "GP0_UART0", 2, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "GP0_UART0", 2, false, false, false, false, true, false); // g (O, cl) - Popup Trigger
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "S_AXI_GP0", 1, false); // g (O, cl)
+selectTreeTable(PAResourceAtoD.AddressTreeTablePanel_ADDRESS_TREE_TABLE, "processing_system7_0 ; S_AXI_GP0 ; GP0_UART0 ; 0xE000_0000 ; 4K ; 0xE000_0FFF", 11, "S_AXI_GP0", 1, false); // g (O, cl)
+// Elapsed time: 57 seconds
+selectTab("PlanAheadTabBaseWorkspace_JideTabbedPane", (HResource) null, "System", 0); // k (j, cl)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// O (cl):  Re-customize IP : addNotify
+// r (cl): Re-customize IP: addNotify
+// cl (r): Configuration Presets: addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  1191 ms.
+dismissDialog("Re-customize IP"); // O (cl)
+// Elapsed time: 13 seconds
+selectButton("MIO Configuration", "MIO Configuration"); // k (ch, r)
+selectButton("MIO Configuration", "MIO Configuration"); // k (ch, r)
+selectButton((HResource) null, "IP Catalog_groupView"); // u (f, r): TRUE
+selectButton("MIO Configuration", "MIO Configuration"); // k (ch, r)
+selectButton("PS-PL Configuration", "PS-PL Configuration"); // k (ch, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "GP Slave AXI Interface ; GP Slave AXI Interface ; GP Slave AXI Interface", 2, "GP Slave AXI Interface", 0, true); // aA (O, r) - Node
+expandTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "GP Slave AXI Interface ; GP Slave AXI Interface ; GP Slave AXI Interface", 2); // aA (O, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3, "S AXI GP0 interface", 0, false); // aA (O, r)
+expandTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3); // aA (O, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3, "S AXI GP0 interface", 0, false, false, false, false, false, true); // aA (O, r) - Double Click
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3, "S AXI GP0 interface", 0, false); // aA (O, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3, "S AXI GP0 interface", 0, false, false, false, false, false, true); // aA (O, r) - Double Click
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3, "S AXI GP0 interface", 0, false); // aA (O, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP1 interface ; 0 ; Enables General purpose 32-bit AXI Slave interface 1", 4, "S AXI GP1 interface", 0, false); // aA (O, r)
+expandTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP1 interface ; 0 ; Enables General purpose 32-bit AXI Slave interface 1", 4); // aA (O, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP1 interface ; 0 ; Enables General purpose 32-bit AXI Slave interface 1", 4, "S AXI GP1 interface", 0, false, false, false, false, false, true); // aA (O, r) - Double Click
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3, "S AXI GP0 interface", 0, false); // aA (O, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3, "S AXI GP0 interface", 0, false, false, false, false, false, true); // aA (O, r) - Double Click
+dismissDialog("Re-customize IP"); // r (cl)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_PIN
+// r (cl): Customize Pin: addNotify
+dismissDialog("Customize Pin"); // r (cl)
+// Run Command: PAResourceCommand.PACommandNames_CUSTOMIZE_RSB_BLOC
+// O (cl):  Re-customize IP : addNotify
+// r (cl): Re-customize IP: addNotify
+// cl (r): Configuration Presets: addNotify
+// WARNING: HEventQueue.dispatchEvent() is taking  1024 ms.
+dismissDialog("Re-customize IP"); // O (cl)
+selectButton("PS-PL Configuration", "PS-PL Configuration"); // k (ch, r)
+expandTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "GP Slave AXI Interface ; GP Slave AXI Interface ; GP Slave AXI Interface", 2); // aA (O, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3, "S AXI GP0 interface", 0, false); // aA (O, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3, "S AXI GP0 interface", 0, false, false, false, false, true, false); // aA (O, r) - Popup Trigger
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3, "S AXI GP0 interface", 0, false); // aA (O, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "S AXI GP0 interface ; 1 ; Enables General purpose 32-bit AXI Slave interface 0", 3, "S AXI GP0 interface", 0, false, false, false, false, true, false); // aA (O, r) - Popup Trigger
+// Elapsed time: 10 seconds
+expandTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "AXI Non Secure Enablement  ; 0 ; Enable AXI Non Secure Transaction", 1); // aA (O, r)
+collapseTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "AXI Non Secure Enablement  ; 0 ; Enable AXI Non Secure Transaction", 1); // aA (O, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "AXI Non Secure Enablement  ; 0 ; Enable AXI Non Secure Transaction", 1, "AXI Non Secure Enablement ", 0, true, false, false, false, false, true); // aA (O, r) - Double Click - Node
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "General ; General ; General", 0, "General", 0, true); // aA (O, r) - Node
+expandTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "General ; General ; General", 0); // aA (O, r)
+selectTreeTable(PAResourceEtoH.GenSettingTreeTablePanel_GEN_SETTING_TREE_TABLE, "UART0 Baud Rate  ; 115200 ; Baud rate is generated with internally fixed UART Ref Clock Freq=100MHz and Clock Source=IO PLL. As all possible standard baud rates can be generated with 100MHz Uart Ref clock.", 1, "UART0 Baud Rate ", 0, false); // aA (O, r)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,587 MB. GUI used memory: 113 MB. Current time: 7/20/22, 5:38:35 PM CST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,587 MB. GUI used memory: 114 MB. Current time: 7/20/22, 6:08:35 PM CST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,587 MB. GUI used memory: 111 MB. Current time: 7/20/22, 6:38:35 PM CST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,587 MB. GUI used memory: 111 MB. Current time: 7/20/22, 7:08:35 PM CST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,587 MB. GUI used memory: 111 MB. Current time: 7/20/22, 7:38:35 PM CST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,587 MB. GUI used memory: 111 MB. Current time: 7/20/22, 8:08:35 PM CST
+// Elapsed time: 10981 seconds
+dismissDialog("Re-customize IP"); // r (cl)
+// HMemoryUtils.trashcanNow. Engine heap size: 1,587 MB. GUI used memory: 109 MB. Current time: 7/20/22, 8:38:35 PM CST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,587 MB. GUI used memory: 109 MB. Current time: 7/20/22, 9:08:35 PM CST
+// HMemoryUtils.trashcanNow. Engine heap size: 1,587 MB. GUI used memory: 108 MB. Current time: 7/20/22, 9:38:35 PM CST

@@ -4,6 +4,7 @@ import chisel3._
 import chisel3.util._
 
 object RVFFTInstr extends HasInstrType with HasNutCoreParameter {
+ // def custom opcode = (0001011,0101011,1011011,1111011)
   def set         = BitPat("b???????_?????_????_?_000_?????_0001011")
   def test_write1 = BitPat("b????_????_????_????_0_001_?????_0001011")
   def test_write2 = BitPat("b????_????_????_????_1_001_?????_0001011")
@@ -13,32 +14,49 @@ object RVFFTInstr extends HasInstrType with HasNutCoreParameter {
   def test_write6 = BitPat("b????_????_????_????_1_011_?????_0001011")
   def test_write7 = BitPat("b????_????_????_????_0_100_?????_0001011")
   def test_write8 = BitPat("b????_????_????_????_1_100_?????_0001011")
-
+  
+  def reg2vec          = BitPat("b???????_?????_?????_000_?????_0101011")
+  def vecl2reg         = BitPat("b???????_?????_?????_001_?????_0101011")
+  def vech2reg         = BitPat("b???????_?????_?????_010_?????_0101011")
+  def clear_counter    = BitPat("b0000000_00000_00000_111_00000_0101011")
+  def clear_src1       = BitPat("b1111111_11111_11111_111_00000_0101011")
+  
   def complex_mul   = BitPat("b???????_?????_?????_111_?????_0001011")
   def shuffle1      = BitPat("b???????_??000_?????_110_?????_0001011")
   def shuffle2      = BitPat("b???????_??001_?????_110_?????_0001011")
   def shuffle3      = BitPat("b???????_??010_?????_110_?????_0001011")
-  def butterfly1    = BitPat("b???????_??000_?????_101_?????_0001011")
-  def butterfly2    = BitPat("b???????_??001_?????_101_?????_0001011")
-  def butterfly3    = BitPat("b???????_??010_?????_101_?????_0001011")
+  def butterfly1    = BitPat("b????000_?????_?????_101_?????_0001011")
+  def butterfly2    = BitPat("b????001_?????_?????_101_?????_0001011")
+  def butterfly3    = BitPat("b????010_?????_?????_101_?????_0001011")
+  def butterfly0    = BitPat("b????011_?????_?????_101_?????_0001011")
+  def butterfly00   = BitPat("b????111_?????_?????_101_?????_0001011")//配合buffterfly0使用，将另一半128bits存入rvec中
+  
+       
 
   val table = Array(
-    set         -> List(InstrFFT, FuType.fftu, FFTUOpType.set),
-    test_write1 -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write1),
-    test_write2 -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write2),
-    test_write3 -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write3),
-    test_write4 -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write4),
-    test_write5 -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write5),
-    test_write6 -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write6),
-    test_write7 -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write7),
-    test_write8 -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write8),
+    set          -> List(InstrFFT, FuType.fftu, FFTUOpType.set),
+    test_write1  -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write1),
+    test_write2  -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write2),
+    test_write3  -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write3),
+    test_write4  -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write4),
+    test_write5  -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write5),
+    test_write6  -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write6),
+    test_write7  -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write7),
+    test_write8  -> List(InstrFFT, FuType.fftu, FFTUOpType.test_write8),
     butterfly1   -> List(InstrFFT, FuType.fftu, FFTUOpType.butterfly1),
     butterfly2   -> List(InstrFFT, FuType.fftu, FFTUOpType.butterfly2),
     butterfly3   -> List(InstrFFT, FuType.fftu, FFTUOpType.butterfly3),
+    butterfly0   -> List(InstrFFT, FuType.fftu, FFTUOpType.butterfly0),
+    butterfly00  -> List(InstrFFT, FuType.fftu, FFTUOpType.butterfly00),
     shuffle1     -> List(InstrFFT, FuType.fftu, FFTUOpType.shuffle1),
     shuffle2     -> List(InstrFFT, FuType.fftu, FFTUOpType.shuffle2),
     shuffle3     -> List(InstrFFT, FuType.fftu, FFTUOpType.shuffle3),
-    complex_mul -> List(InstrFFT, FuType.fftu, FFTUOpType.complex_mul)
+    complex_mul  -> List(InstrFFT, FuType.fftu, FFTUOpType.complex_mul),
+    reg2vec      -> List(InstrFFT, FuType.fftu, FFTUOpType.reg2vec),
+    vecl2reg     -> List(InstrFFT, FuType.fftu, FFTUOpType.vecl2reg),
+    vech2reg     -> List(InstrFFT, FuType.fftu, FFTUOpType.vech2reg),
+    clear_counter -> List(InstrFFT, FuType.fftu, FFTUOpType.clear_counter),
+    clear_src1    -> List(InstrFFT, FuType.fftu, FFTUOpType.clear_src1)
 
   )
 }

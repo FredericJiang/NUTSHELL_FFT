@@ -1,0 +1,42 @@
+#-----------------------------------------------------------
+# Vivado v2019.1 (64-bit)
+# SW Build 2552052 on Fri May 24 14:47:09 MDT 2019
+# IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
+# Start of session at: Sat Jul 23 15:39:02 2022
+# Process ID: 1602278
+# Current directory: /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga
+# Command line: vivado
+# Log file: /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/vivado.log
+# Journal file: /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/vivado.jou
+#-----------------------------------------------------------
+start_gui
+open_project /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.xpr
+update_compile_order -fileset sources_1
+open_bd_design {/data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.srcs/sources_1/bd/system_top/system_top.bd}
+startgroup
+set_property -dict [list CONFIG.PCW_UART0_BAUD_RATE {230400}] [get_bd_cells processing_system7_0]
+endgroup
+save_bd_design
+launch_runs synth_1 -jobs 32
+wait_on_run synth_1
+launch_runs impl_1 -jobs 32
+wait_on_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 32
+wait_on_run impl_1
+file mkdir /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.sdk
+file copy -force /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.runs/impl_1/system_top_wrapper.sysdef /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.sdk/system_top_wrapper.hdf
+
+startgroup
+set_property -dict [list CONFIG.PCW_UART0_BAUD_RATE {115200}] [get_bd_cells processing_system7_0]
+endgroup
+reset_run system_top_processing_system7_0_0_synth_1
+save_bd_design
+reset_run synth_1
+launch_runs synth_1 -jobs 32
+wait_on_run synth_1
+launch_runs impl_1 -jobs 32
+wait_on_run impl_1
+launch_runs impl_1 -to_step write_bitstream -jobs 32
+wait_on_run impl_1
+file copy -force /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.runs/impl_1/system_top_wrapper.sysdef /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.sdk/system_top_wrapper.hdf
+

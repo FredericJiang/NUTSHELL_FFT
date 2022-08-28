@@ -31,7 +31,7 @@ class WBU(implicit val p: NutCoreConfig) extends NutCoreModule{
   io.wb.rfWen := io.in.bits.decode.ctrl.rfWen && io.in.valid
   io.wb.rfDest := io.in.bits.decode.ctrl.rfDest
   io.wb.rfData := io.in.bits.commits(io.in.bits.decode.ctrl.fuType)
-  io.wb.rfType := io.in.bits.decode.ctrl.rfType
+  io.wb.DestType := io.in.bits.decode.ctrl.DestType
   io.wb.mask   := io.in.bits.mask
 
   io.in.ready := true.B

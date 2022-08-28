@@ -21,7 +21,7 @@ set brd [lindex $s 1]
 set script_dir [file normalize [file dirname [info script]]]
 set build_dir ${script_dir}/build/${project_name}
 
-set device_tree_repo_path "/home/yzh/xilinx/device-tree-xlnx"
+set device_tree_repo_path "/data/jsj/proj/NUTSHELL_FFT/fpga/device-tree-xlnx"
 
 switch -regexp -- $brd {
   zedboard|pynq {

@@ -36,19 +36,18 @@ class ISU(implicit val p: NutCoreConfig) extends NutCoreModule with HasRegFilePa
   val rfSrc1 = io.in(0).bits.ctrl.rfSrc1
   val rfSrc2 = io.in(0).bits.ctrl.rfSrc2
   val rfDest1 = io.in(0).bits.ctrl.rfDest
-  //区分是否是向量寄存器
-  val rfType_r  = io.in(0).bits.ctrl.rfType
-  val rfTypeEX_w  = io.forward.wb.rfType
-  val rfTypeWB_w  = io.wb.rfType
+  val DestType_r  = io.in(0).bits.ctrl.DestType
+  val DestTypeEX_w  = io.forward.wb.DestType
+  val DestTypeWB_w  = io.wb.DestType
   //增加了是否相关的条件，即是否是对同一个寄存器组进行读写
-  def isDepend(rfSrc: UInt, rfDest: UInt, wen: Bool, rfType_read:UInt, rfType_write:UInt): Bool = (rfSrc =/= 0.U || rfType_read === 1.U) && (rfSrc === rfDest) && wen && (rfType_read === rfType_write)
+  def isDepend(rfSrc: UInt, rfDest: UInt, wen: Bool, DestType_read:UInt, DestType_write:UInt): Bool = (rfSrc =/= 0.U || DestType_read === 1.U) && (rfSrc === rfDest) && wen && (DestType_read === DestType_write)
 
   val forwardRfWen = io.forward.wb.rfWen && io.forward.valid //从执行级传入
   val dontForward1 = (io.forward.fuType =/= FuType.alu) && (io.forward.fuType =/= FuType.lsu) && (io.forward.fuType =/= FuType.fftu)
-  val src1DependEX = isDepend(rfSrc1, io.forward.wb.rfDest, forwardRfWen, rfType_r, rfTypeEX_w)
-  val src2DependEX = isDepend(rfSrc2, io.forward.wb.rfDest, forwardRfWen, rfType_r, rfTypeEX_w)
-  val src1DependWB = isDepend(rfSrc1, io.wb.rfDest, io.wb.rfWen, rfType_r, rfTypeWB_w)
-  val src2DependWB = isDepend(rfSrc2, io.wb.rfDest, io.wb.rfWen, rfType_r, rfTypeWB_w)
+  val src1DependEX = isDepend(rfSrc1, io.forward.wb.rfDest, forwardRfWen, DestType_r, DestTypeEX_w)
+  val src2DependEX = isDepend(rfSrc2, io.forward.wb.rfDest, forwardRfWen, DestType_r, DestTypeEX_w)
+  val src1DependWB = isDepend(rfSrc1, io.wb.rfDest, io.wb.rfWen, DestType_r, DestTypeWB_w)
+  val src2DependWB = isDepend(rfSrc2, io.wb.rfDest, io.wb.rfWen, DestType_r, DestTypeWB_w)
 
   val src1ForwardNextCycle = src1DependEX && !dontForward1
   val src2ForwardNextCycle = src2DependEX && !dontForward1
@@ -59,6 +58,21 @@ class ISU(implicit val p: NutCoreConfig) extends NutCoreModule with HasRegFilePa
   val src1Ready = !sb.isBusy(rfSrc1) || src1ForwardNextCycle || src1Forward
   val src2Ready = !sb.isBusy(rfSrc2) || src2ForwardNextCycle || src2Forward
   io.out.valid := io.in(0).valid && src1Ready && src2Ready
+  
+  val isSRC1_counter_add  = io.in(0).bits.ctrl.fuType===FuType.fftu && io.in(0).bits.ctrl.fuOpType===FFTUOpType.vech2reg
+  val isSRC1_counter_read  = io.in(0).bits.ctrl.fuType===FuType.fftu && (io.in(0).bits.ctrl.fuOpType===FFTUOpType.vech2reg || io.in(0).bits.ctrl.fuOpType===FFTUOpType.vecl2reg )
+  val isclear_counter = io.in(0).bits.ctrl.fuType===FuType.fftu &&  io.in(0).bits.ctrl.fuOpType===FFTUOpType.clear_src1
+  val src1_counter = RegInit(0.U(5.W))
+  val pc_reg  = RegInit(0.U)
+  pc_reg := io.in(0).bits.cf.pc
+  val ispc_stuck = pc_reg === io.in(0).bits.cf.pc
+  
+  when(isSRC1_counter_add && !ispc_stuck){
+    src1_counter := src1_counter + 1.U
+  }
+  when(isclear_counter){
+    src1_counter := 0.U
+  }
 
   val rf   = new RegFile //使用寄存器进行数据存储
   val rvec = new RegVec
@@ -71,19 +85,19 @@ class ISU(implicit val p: NutCoreConfig) extends NutCoreModule with HasRegFilePa
   val isSDVEC1 = (io.in(0).bits.ctrl.fuType===FuType.lsu  && io.in(0).bits.ctrl.fuOpType === LSUOpType.sdvec1)
   val forwardEX_SDrvData = Mux(isSDVEC0,Cat(Fill(64,0.U),forwardEX_rvData(63,0)),Mux(isSDVEC1,Cat(Fill(64,0.U),forwardEX_rvData(127,64)),forwardEX_rvData))
   val forwardWB_SDrvData = Mux(isSDVEC0,Cat(Fill(64,0.U),forwardWB_rvData(63,0)),Mux(isSDVEC1,Cat(Fill(64,0.U),forwardWB_rvData(127,64)),forwardWB_rvData))
-  val forwardEXData = Mux((io.in(0).bits.ctrl.rfType===0.U),io.forward.wb.rfData,forwardEX_SDrvData)
-  val forwardWBData = Mux((io.in(0).bits.ctrl.rfType===0.U),io.wb.rfData,forwardWB_SDrvData) 
+  val forwardEXData = Mux((io.in(0).bits.ctrl.DestType===0.U),io.forward.wb.rfData,forwardEX_SDrvData)
+  val forwardWBData = Mux((io.in(0).bits.ctrl.DestType===0.U),io.wb.rfData,forwardWB_SDrvData) 
   // out1
   io.out.bits.data.src1 := MuxCase(1.U,Array(        
     //在这里使得操作数从rvec中得到，同时考虑数据前推的问题 
+    (isSRC1_counter_read )   -> rvec.read(src1_counter),
     (io.in(0).bits.ctrl.src1Type === SrcType.pc) -> SignExt(io.in(0).bits.cf.pc, AddrBits),
     src1ForwardNextCycle -> forwardEXData, //io.forward.wb.rfData,
     (src1Forward && !src1ForwardNextCycle) -> forwardWBData, //io.wb.rfData,
-    ((io.in(0).bits.ctrl.src1Type === SrcType.reg && rfType_r === 0.U) && !src1ForwardNextCycle && !src1Forward &&(io.in(0).bits.ctrl.rfType===0.U)) -> rf.read(rfSrc1),
-    (io.in(0).bits.ctrl.src1Type === SrcType.rvec || rfType_r === 1.U ) -> rvec.read(rfSrc1)
+    ((io.in(0).bits.ctrl.src1Type === SrcType.reg ) && !src1ForwardNextCycle && !src1Forward ) -> rf.read(rfSrc1),
+    (io.in(0).bits.ctrl.src1Type === SrcType.rvec ) -> rvec.read(rfSrc1)
   ))
   io.out.bits.data.src2 :=  MuxCase(1.U,Array(
-   
     (io.in(0).bits.ctrl.src2Type === SrcType.imm) -> io.in(0).bits.data.imm,
     src2ForwardNextCycle -> forwardEXData, //io.forward.wb.rfData,
     (src2Forward && !src2ForwardNextCycle) -> forwardWBData, //io.wb.rfData,
@@ -105,10 +119,10 @@ class ISU(implicit val p: NutCoreConfig) extends NutCoreModule with HasRegFilePa
   io.out.bits.ctrl.isSrc2Forward := src2ForwardNextCycle
 
   // retire: write rf
-  when (io.wb.rfWen && (io.wb.rfType===0.U)) { rf.write(io.wb.rfDest, io.wb.rfData(XLEN-1,0)) }//写普通寄存器
-  when (io.wb.rfWen && (io.wb.rfType===1.U)) { rvec.write(io.wb.rfDest, io.wb.rfData, io.wb.mask)}//写向量寄存器
+  when (io.wb.rfWen && (io.wb.DestType===0.U)) { rf.write(io.wb.rfDest, io.wb.rfData(XLEN-1,0)) }//写普通寄存器
+  when (io.wb.rfWen && (io.wb.DestType===1.U)) { rvec.write(io.wb.rfDest, io.wb.rfData, io.wb.mask)}//写向量寄存器
   
-  val wbClearMask = Mux(io.wb.rfWen && !isDepend(io.wb.rfDest, io.forward.wb.rfDest, forwardRfWen, rfType_r, rfTypeWB_w), sb.mask(io.wb.rfDest), 0.U(NRReg.W))
+  val wbClearMask = Mux(io.wb.rfWen && !isDepend(io.wb.rfDest, io.forward.wb.rfDest, forwardRfWen, DestType_r, DestTypeWB_w), sb.mask(io.wb.rfDest), 0.U(NRReg.W))
   // val isuFireSetMask = Mux(io.out.fire(), sb.mask(rfDest), 0.U)
   val isuFireSetMask = Mux(io.out.fire(), sb.mask(rfDest1), 0.U)
   when (io.flush) { sb.update(0.U, Fill(NRReg, 1.U(1.W))) }

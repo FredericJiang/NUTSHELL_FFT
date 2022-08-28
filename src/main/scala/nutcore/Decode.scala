@@ -60,7 +60,6 @@ object SrcType {
   def imm = "b01".U
  //FFT拓展指令集加入的寄存器模块  
   def rvec = "b11".U 
-//  def twiddle = "b10".U
   def apply() = UInt(2.W)
 }
 

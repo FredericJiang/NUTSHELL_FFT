@@ -28,15 +28,9 @@ class CtrlSignalIO extends NutCoreBundle {
   val rfSrc2 = Output(UInt(5.W))
   val rfWen = Output(Bool())
   val rfDest = Output(UInt(5.W))
-  val rfType =  Output(UInt(1.W))
-//0是普通寄存器，1是向量寄存器
-//写向量寄存器
-//   val rvecSrc1 = Output(UInt(3.W))
-//   val rvecSrc2 = Output(UInt(3.W))
-//   val rvecSrc3 = Output(UInt(3.W))
-//   val rvecWen  = Output(Bool())
-//   val rvecDest = Output(UInt(3.W))
-  
+  val DestType =  Output(UInt(1.W))//0是普通寄存器，1是向量寄存器
+
+
   val isNutCoreTrap = Output(Bool())
   val isSrc1Forward = Output(Bool())
   val isSrc2Forward = Output(Bool())
@@ -49,14 +43,7 @@ class DataSrcIO extends NutCoreBundle {
   val src1 = Output(UInt(VLEN.W))
   val src2 = Output(UInt(VLEN.W))
   val imm  = Output(UInt(VLEN.W))  
-  // val vsrc1 = Output(UInt(VLEN.W))
-  // val vsrc2 = Output(UInt(VLEN.W))
-  //FFT拓展的数据信号
-  // val vsrc1 = Output(UInt(XLEN.W))
-  // val vsrc2 = Output(UInt(XLEN.W))
-  // val vscr3 = Output(UInt(XLEN.W))
-  // val set  = Output(UInt(3.W))
-  // val gap  = Output(UInt(3.W))
+
 }
 
 class RedirectIO extends NutCoreBundle {
@@ -93,11 +80,10 @@ class DecodeIO extends NutCoreBundle {
 }
 
 class WriteBackIO extends NutCoreBundle {
-  val rfWen = Output(Bool())
+  val rfWen  = Output(Bool())
   val rfDest = Output(UInt(5.W))
   val rfData = Output(UInt(VLEN.W))
-  //用来区分写常规寄存器还是向量寄存器
-  val rfType = Output(UInt(1.W))
+  val DestType = Output(UInt(2.W))
   val mask  =  Output(UInt(VLEN.W))
 
   //write RVec signal
