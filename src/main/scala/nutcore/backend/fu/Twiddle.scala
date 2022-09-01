@@ -1,58 +1,119 @@
 package nutcore
 import chisel3._
 import chisel3.util._
+import chisel3.experimental._
+import scala.math._
 import chisel3.util.experimental.BoringUtils
 
 
-trait  Twiddle { 
-val twiddle = Reg(Vec(40,UInt(32.W)))
-// twiddle  for  layer 1 
-twiddle(0) := "b00000000_00000000_00000001_00000000".U 
-twiddle(1) := "b00000000_00000000_00000001_00000000".U  
-twiddle(2) := "b00000000_00000000_00000001_00000000".U 
-twiddle(3) := "b00000000_00000000_00000001_00000000".U 
-twiddle(4) := "b00000000_00000000_00000001_00000000".U 
-twiddle(5) := "b00000000_00000000_00000001_00000000".U 
-twiddle(6) := "b00000000_00000000_00000001_00000000".U 
-twiddle(7) := "b00000000_00000000_00000001_00000000".U 
-// twiddle  for  layer  2
-twiddle(8) := "b00000000_00000000_00000001_00000000".U 
-twiddle(9) := "b00000000_00000000_00000001_00000000".U 
-twiddle(10):= "b00000000_00000000_00000001_00000000".U 
-twiddle(11):= "b11111111_00000000_00000000_00000000".U 
-twiddle(12):= "b00000000_00000000_00000001_00000000".U 
-twiddle(13):= "b00000000_00000000_00000001_00000000".U 
-twiddle(14):= "b00000000_00000000_00000001_00000000".U 
-twiddle(15):= "b11111111_00000000_00000000_00000000".U 
-// twiddle  for  layer   3
-twiddle(16):= "b00000000_00000000_00000001_00000000".U 
-twiddle(17):= "b00000000_00000000_00000001_00000000".U 
-twiddle(18):= "b00000000_00000000_00000001_00000000".U 
-twiddle(19):= "b00000000_00000000_00000001_00000000".U 
-twiddle(20):= "b00000000_00000000_00000001_00000000".U 
-twiddle(21):= "b11111111_01001011_00000000_10110101".U 
-twiddle(22):= "b11111111_00000000_00000000_00000000".U 
-twiddle(23):= "b11111111_01001011_11111111_01001011".U 
+trait Twiddle{
+  val FFTLength = 1024
+//Wn = cosx + sin(-x) j
+  def sinTable(k: Int): Vec[FixedPoint] = {
+    val times = (0 until FFTLength / 2 by pow(2, k).toInt)
+                .map(i => -(i * 2 * Pi) / FFTLength.toDouble)
+    val inits = times
+                .map(t => FixedPoint.fromDouble(sin(t), 16.W, 8.BP))
+    VecInit(inits)
+  }
 
-// twiddle  for  layer   4
-twiddle(24):= "b00000000_00000000_00000000_00000000".U 
-twiddle(25):= "b00000000_00000000_00000001_00000000".U 
-twiddle(26):= "b00000000_00000000_00000010_00000000".U 
-twiddle(27):= "b00000000_00000000_00000011_00000000".U 
-twiddle(28):= "b00000000_00000000_00000100_00000000".U 
-twiddle(29):= "b00000000_00000000_00000011_00000000".U 
-twiddle(30):= "b00000000_00000000_00000010_00000000".U 
-twiddle(31):= "b00000000_00000000_00000001_00000000".U 
+  def cosTable(k: Int): Vec[FixedPoint] = {
+    val times = (0 until FFTLength / 2 by pow(2, k).toInt)
+                .map(i => (i * 2 * Pi) / FFTLength.toDouble)
+    val inits = times
+                .map(t => FixedPoint.fromDouble(cos(t), 16.W, 8.BP))
+    VecInit(inits)
+  }
 
-// twiddle  for  layer   5
-twiddle(32):= "b00000000_00000000_00000001_00000000".U 
-twiddle(33):= "b00000000_00000000_00000001_00000000".U 
-twiddle(34):= "b00000000_00000000_00000001_00000000".U 
-twiddle(35):= "b00000000_00000000_00000001_00000000".U 
-twiddle(36):= "b00000000_00000000_00000001_00000000".U 
-twiddle(37):= "b00000000_00000000_00000001_00000000".U 
-twiddle(38):= "b00000000_00000000_00000001_00000000".U 
-twiddle(39):= "b00000000_00000000_00000001_00000000".U 
-
+  def wnTable(k: Int)(idx: UInt): UInt = {
+    val res = WireInit(0.U(32.W))
+    Cat(sinTable(k)(idx),cosTable(k)(idx))
+  }
 
 }
+
+
+object complex_add {
+  def apply(src1: UInt, src2: UInt): UInt = {
+  //采用双符号位设计
+    val num1r = Cat(src1(15),src1(15,0))
+    val num1i = Cat(src1(31),src1(31,16))
+    val num2r = Cat(src2(15),src2(15,0))
+    val num2i = Cat(src2(31),src2(31,16))
+    val resultr = WireInit(0.U(17.W))
+    val resulti = WireInit(0.U(17.W))
+    val outr = WireInit(0.U(16.W))
+    val outi = WireInit(0.U(16.W))
+
+     resultr := num1r + num2r
+     resulti := num1i + num2i
+  
+  //两者均为正数或负数才会溢出
+    when(num1r(16,15)===num2r(16,15)){
+      when(resultr(16,15)===2.U){
+        outr := 0x8001.U
+      }
+      .elsewhen(resultr(16,15)===1.U){
+        outr := 0x7fff.U
+      }.otherwise{
+        outr := resultr(15,0)
+      }
+    }.otherwise{
+      outr := resultr(15,0)
+    }
+
+    when(num1i(16,15)===num2i(16,15)){
+      when(resulti(16,15)===2.U){
+        outi := 0x8001.U
+      }
+      .elsewhen(resulti(16,15)===1.U){
+        outi := 0x7fff.U
+      }.otherwise{
+        outi := resulti(15,0)
+      }
+    }.otherwise{
+      outi := resulti(15,0)
+    }
+    
+        Cat(outi,outr)
+
+
+  }
+}
+
+object complex_sub {
+  def apply(src1: UInt, src2: UInt): UInt = {
+    val num1r = src1(15,0)
+    val num1i = src1(31,16)
+    val num2r = src2(15,0)
+    val num2i = src2(31,16)
+    val resultr = WireInit(0.U(16.W))
+    val resulti = WireInit(0.U(16.W))
+
+    resultr := num1r - num2r
+    resulti := num1i - num2i
+    Cat(resulti,resultr)
+
+  }
+}
+
+object complex_multiplier {
+  def apply(src1: UInt, wn: UInt): UInt = {
+
+  val src1_real = Cat(Fill(8,src1(15)),src1(15,0))
+  val src1_img  = Cat(Fill(8,src1(31)),src1(31,16))
+  val wn_real   = Cat(Fill(8,wn(15)),wn(15,0))
+  val wn_img    = Cat(Fill(8,wn(31)),wn(31,16))
+
+  val new_real  = WireInit(0.U(48.W))
+  val new_img   = WireInit(0.U(48.W))
+  
+  new_real := (src1_real*wn_real)-(src1_img*wn_img)
+  new_img  := (src1_real*wn_img) + (src1_img*wn_real)
+
+  Cat(new_img(23,8),new_real(23,8))
+
+  }
+}
+
+
