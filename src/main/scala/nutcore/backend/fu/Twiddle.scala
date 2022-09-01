@@ -10,26 +10,45 @@ trait Twiddle{
   val FFTLength = 1024
 //Wn = cosx + sin(-x) j
   def sinTable(k: Int): Vec[FixedPoint] = {
-    val times = (0 until FFTLength / 2 by pow(2, k).toInt)
+    val times = (0 until FFTLength/2 by pow(2, (10-k)).toInt)
                 .map(i => -(i * 2 * Pi) / FFTLength.toDouble)
     val inits = times
-                .map(t => FixedPoint.fromDouble(sin(t), 16.W, 8.BP))
+                .map(t => FixedPoint.fromDouble(sin(t), 18.W, 16.BP))
     VecInit(inits)
   }
 
   def cosTable(k: Int): Vec[FixedPoint] = {
-    val times = (0 until FFTLength / 2 by pow(2, k).toInt)
+    val times = (0 until FFTLength/2 by pow(2, (10-k)).toInt)
                 .map(i => (i * 2 * Pi) / FFTLength.toDouble)
     val inits = times
-                .map(t => FixedPoint.fromDouble(cos(t), 16.W, 8.BP))
+                .map(t => FixedPoint.fromDouble(cos(t), 18.W, 16.BP))
     VecInit(inits)
   }
 
   def wnTable(k: Int)(idx: UInt): UInt = {
-    val res = WireInit(0.U(32.W))
     Cat(sinTable(k)(idx),cosTable(k)(idx))
   }
 
+}
+
+object complex_multiplier {
+  def apply(src1: UInt, wn: UInt): UInt = {
+
+  val src1_real = Cat(Fill(8,src1(15)),src1(15,0))
+  val src1_img  = Cat(Fill(8,src1(31)),src1(31,16))
+
+  val wn_real   = Cat(Fill(6,wn(17)),wn(17,0))
+  val wn_img    = Cat(Fill(6,wn(35)),wn(35,18))
+
+  val new_real  = WireInit(0.U(48.W))
+  val new_img   = WireInit(0.U(48.W))
+  
+  new_real := (src1_real*wn_real)- (src1_img*wn_img)
+  new_img  := (src1_real*wn_img) + (src1_img*wn_real)
+
+  Cat(new_img(31,16),new_real(31,16))
+
+  }
 }
 
 
@@ -77,7 +96,6 @@ object complex_add {
     
         Cat(outi,outr)
 
-
   }
 }
 
@@ -97,23 +115,5 @@ object complex_sub {
   }
 }
 
-object complex_multiplier {
-  def apply(src1: UInt, wn: UInt): UInt = {
-
-  val src1_real = Cat(Fill(8,src1(15)),src1(15,0))
-  val src1_img  = Cat(Fill(8,src1(31)),src1(31,16))
-  val wn_real   = Cat(Fill(8,wn(15)),wn(15,0))
-  val wn_img    = Cat(Fill(8,wn(31)),wn(31,16))
-
-  val new_real  = WireInit(0.U(48.W))
-  val new_img   = WireInit(0.U(48.W))
-  
-  new_real := (src1_real*wn_real)-(src1_img*wn_img)
-  new_img  := (src1_real*wn_img) + (src1_img*wn_real)
-
-  Cat(new_img(23,8),new_real(23,8))
-
-  }
-}
 
 

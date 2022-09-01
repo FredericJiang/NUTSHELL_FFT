@@ -19,7 +19,7 @@ object FFTUOpType{
  def test_write6          ="b0000110".U
  def test_write7          ="b0000111".U
  def test_write8          ="b0001000".U
- def complex_mul          ="b0001001".U
+ //def complex_mul          ="b0001001".U
  def shuffle_single       ="b0001010".U
  def shuffle_double0      ="b0001011".U
  def shuffle_double1      ="b0001100".U
@@ -32,6 +32,9 @@ object FFTUOpType{
  def vech2reg             ="b0010100".U
  def clear_counter        ="b0010101".U
  def clear_src1           ="b0010110".U
+ def complex_mul0         ="b0010111".U
+ def complex_mul1         ="b0011000".U
+ def complex_mul2         ="b0011001".U
 }
 
 class FFTUIO extends FunctionUnitIO {
@@ -123,23 +126,56 @@ class FFTU extends NutCoreModule with Twiddle {
   io.counter_dest := data_trans_counter
 
 
- val a = RegInit(3.U)
+
 
 /* Operation for Copmlex_Mul */
-  when(func === FFTUOpType.complex_mul){
+ when(func === FFTUOpType.complex_mul0){
+  
+    val num0 = src1(31,0)
+    val num1 = src1(63,32)
+    val num2 = src1(95,64)
+    val num3 = src1(127,96)
+  
+
+    result := Cat(num3,num2,num1,num0)
+    
+    }
+  
+  when(func === FFTUOpType.complex_mul1){
+    
+  val wn0 = "h000010000".U
+  val wn1 = "hc00000000".U
+
+    val num0 = src1(31,0)
+    val num1 = src1(63,32)
+    val num2 = src1(95,64)
+    val num3 = src1(127,96)
+  
+    val new_num2 = complex_multiplier(num2,wn0)
+    val new_num3 = complex_multiplier(num3,wn1)
+
+    result := Cat(new_num3,new_num2,num1,num0)
+    
+    }
+  
+  val layer = WireInit(0.U(4.W))
+  val n     = WireInit(0.U(6.W))
+  layer     := io.parameters(7,4)
+  n         := io.parameters(13,8)
+  when(func === FFTUOpType.complex_mul2){
     
     //Generate WnTable
     var k = 0
-    val wn0,wn1,wn2,wn3 = RegInit(0.U)
+    val wn0,wn1,wn2,wn3 = WireInit(0.U)
     for(k <- 0 to 10){
-      when(k.U === a){
-       wn0 := wnTable(k)(a).asUInt
-       wn1 := wnTable(k)(a).asUInt
-       wn2 := wnTable(k)(a).asUInt
-       wn3 := wnTable(k)(a).asUInt
+      when(k.U === layer){
+       wn0 := wnTable(k)(n).asUInt
+       wn1 := wnTable(k)(n+1.U).asUInt
+       wn2 := wnTable(k)(n+2.U).asUInt
+       wn3 := wnTable(k)(n+3.U).asUInt
       }
     }
-   
+   printf(" parameter is %b\n layer is %d\n k is %d\n wn0 is %b\n wn1 is %b\n wn2 is %b\n wn3 is %b\n",io.parameters,layer,k.U,wn0,wn1,wn2,wn3)
 
     val num0 = src1(31,0)
     val num1 = src1(63,32)
@@ -154,7 +190,6 @@ class FFTU extends NutCoreModule with Twiddle {
     result := Cat(new_num3,new_num2,new_num1,new_num0)
     
     }
-
 
   when(func === FFTUOpType.butterfly_single0){
      val num0 = src1(31,0)
@@ -215,11 +250,6 @@ class FFTU extends NutCoreModule with Twiddle {
     result := result_buff_reg
     result_buff_reg := 0.U
 
-
-  //  val sinn = sinTable(1)
-  //  for(i <- 0 until 8){
-  //   printf("sintable is = %x\n",sinn(i).asSInt)
-  //  }
 }
 
 
@@ -286,7 +316,9 @@ class FFTU extends NutCoreModule with Twiddle {
   (func === FFTUOpType.shuffle_single)      -> Cat(Fill(128,1.U)),
   (func === FFTUOpType.shuffle_double0)     -> Cat(Fill(128,1.U)),
   (func === FFTUOpType.shuffle_double1)     -> Cat(Fill(128,1.U)),
-  (func === FFTUOpType.complex_mul)         -> Cat(Fill(128,1.U)),
+  (func === FFTUOpType.complex_mul0)        -> Cat(Fill(128,1.U)),
+  (func === FFTUOpType.complex_mul1)        -> Cat(Fill(128,1.U)),
+  (func === FFTUOpType.complex_mul2)        -> Cat(Fill(128,1.U)),
   (func === FFTUOpType.reg2vec)             -> Cat(Fill(128,1.U))
   ))
 
