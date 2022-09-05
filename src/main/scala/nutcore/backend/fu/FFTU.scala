@@ -143,8 +143,8 @@ class FFTU extends NutCoreModule with Twiddle {
   
   when(func === FFTUOpType.complex_mul1){
     
-  val wn0 = "h000010000".U
-  val wn1 = "hc00000000".U
+  val wn0 = "h000100".U
+  val wn1 = "hc00000".U
 
     val num0 = src1(31,0)
     val num1 = src1(63,32)
@@ -157,25 +157,32 @@ class FFTU extends NutCoreModule with Twiddle {
     result := Cat(new_num3,new_num2,num1,num0)
     
     }
-  
+  val sin_table = sinTable(10)
+  val cos_table = cosTable(10)
   val layer = WireInit(0.U(4.W))
   val n     = WireInit(0.U(6.W))
   layer     := io.parameters(7,4)
   n         := io.parameters(13,8)
+
   when(func === FFTUOpType.complex_mul2){
     
     //Generate WnTable
-    var k = 0
+  //   var k = 0
+  //   val wn0,wn1,wn2,wn3 = WireInit(0.U)
+  //   for(k <- 0 to 10){
+  //     when(k.U === layer){
+  //      wn0 := wnTable(k)(n).asUInt
+  //      wn1 := wnTable(k)(n+1.U).asUInt
+  //      wn2 := wnTable(k)(n+2.U).asUInt
+  //      wn3 := wnTable(k)(n+3.U).asUInt
+  //     }
+  //   }
+  //  printf(" parameter is %b\n layer is %d\n k is %d\n wn0 is %b\n wn1 is %b\n wn2 is %b\n wn3 is %b\n",io.parameters,layer,k.U,wn0,wn1,wn2,wn3)
     val wn0,wn1,wn2,wn3 = WireInit(0.U)
-    for(k <- 0 to 10){
-      when(k.U === layer){
-       wn0 := wnTable(k)(n).asUInt
-       wn1 := wnTable(k)(n+1.U).asUInt
-       wn2 := wnTable(k)(n+2.U).asUInt
-       wn3 := wnTable(k)(n+3.U).asUInt
-      }
-    }
-   printf(" parameter is %b\n layer is %d\n k is %d\n wn0 is %b\n wn1 is %b\n wn2 is %b\n wn3 is %b\n",io.parameters,layer,k.U,wn0,wn1,wn2,wn3)
+      wn0 := Cat(sin_table(n),cos_table(n)).asUInt
+      wn1 := Cat(sin_table(n+1.U),cos_table(n+1.U)).asUInt
+      wn2 := Cat(sin_table(n+2.U),cos_table(n+2.U)).asUInt
+      wn3 := Cat(sin_table(n+3.U),cos_table(n+3.U)).asUInt
 
     val num0 = src1(31,0)
     val num1 = src1(63,32)

@@ -2,18 +2,11 @@
 # Vivado v2019.1 (64-bit)
 # SW Build 2552052 on Fri May 24 14:47:09 MDT 2019
 # IP Build 2548770 on Fri May 24 18:01:18 MDT 2019
-# Start of session at: Sat Sep  3 17:03:50 2022
-# Process ID: 353815
+# Start of session at: Sat Sep  3 16:23:20 2022
+# Process ID: 271360
 # Current directory: /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga
 # Command line: vivado
 # Log file: /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/vivado.log
 # Journal file: /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/vivado.jou
 #-----------------------------------------------------------
 start_gui
-open_project /data/jsj/proj/FFT_fpga/NUTSHELL_FFT/fpga/board/pynq/build/myproject-pynq/myproject-pynq.xpr
-update_compile_order -fileset sources_1
-launch_runs synth_1 -jobs 32
-wait_on_run synth_1
-launch_runs impl_1 -jobs 32
-wait_on_run impl_1
-open_run impl_1

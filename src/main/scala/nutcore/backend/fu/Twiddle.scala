@@ -13,7 +13,7 @@ trait Twiddle{
     val times = (0 until FFTLength/2 by pow(2, (10-k)).toInt)
                 .map(i => -(i * 2 * Pi) / FFTLength.toDouble)
     val inits = times
-                .map(t => FixedPoint.fromDouble(sin(t), 18.W, 16.BP))
+                .map(t => FixedPoint.fromDouble(sin(t), 12.W, 10.BP))
     VecInit(inits)
   }
 
@@ -21,7 +21,7 @@ trait Twiddle{
     val times = (0 until FFTLength/2 by pow(2, (10-k)).toInt)
                 .map(i => (i * 2 * Pi) / FFTLength.toDouble)
     val inits = times
-                .map(t => FixedPoint.fromDouble(cos(t), 18.W, 16.BP))
+                .map(t => FixedPoint.fromDouble(cos(t), 12.W, 10.BP))
     VecInit(inits)
   }
 
@@ -34,19 +34,21 @@ trait Twiddle{
 object complex_multiplier {
   def apply(src1: UInt, wn: UInt): UInt = {
 
-  val src1_real = Cat(Fill(8,src1(15)),src1(15,0))
-  val src1_img  = Cat(Fill(8,src1(31)),src1(31,16))
+  // val src1_real = Cat(Fill(4,src1(15)),src1(15,0))
+  // val src1_img  = Cat(Fill(4,src1(31)),src1(31,16))
 
-  val wn_real   = Cat(Fill(6,wn(17)),wn(17,0))
-  val wn_img    = Cat(Fill(6,wn(35)),wn(35,18))
+  val src1_real = src1(15,0)
+  val src1_img  = src1(31,16)
+  val wn_real   = Cat(Fill(2,wn(11)),wn(11,0))
+  val wn_img    = Cat(Fill(2,wn(23)),wn(23,12))
 
-  val new_real  = WireInit(0.U(48.W))
-  val new_img   = WireInit(0.U(48.W))
+  val new_real  = WireInit(0.U(30.W))
+  val new_img   = WireInit(0.U(30.W))
   
   new_real := (src1_real*wn_real)- (src1_img*wn_img)
   new_img  := (src1_real*wn_img) + (src1_img*wn_real)
 
-  Cat(new_img(31,16),new_real(31,16))
+  Cat(new_img(27,12),new_real(27,12))
 
   }
 }
